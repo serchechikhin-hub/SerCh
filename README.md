@@ -119,3 +119,38 @@ echo "Количество строк: $((line_number-1))"
 ----------------------------------------
 Количество строк: 4
 ubuntu:~$ 
+
+ubuntu:~$ #!/bin/bash
+read -p "Введите имя файла: " filename
+echo "нетология-bash" > "$filename"
+echo "нетология-вшэ" >> "$filename"
+echo "нетология-обучение" >> "$filename"
+echo "нетология-devsecops" >> "$filename"
+echo "Файл $filename создан"
+
+read -p "Введите слово, которое хотите изменить: " word1 
+read -p "Введите слово, на которое хотите заменить: " word2
+
+# Заменяем слова
+sed -i "s/$word1/$word2/g" "$filename"
+
+echo "Содержимое файла '$filename':"
+echo "----------------------------------------"
+
+# Читаем файл построчно и выводим на экран
+line_number=1
+while IFS= read -r line; do
+    echo "Строка $line_number: $line"
+    ((line_number++))
+done < "$filename"
+Введите имя файла: student
+Файл student создан
+Введите слово, которое хотите изменить: нетология
+Введите слово, на которое хотите заменить: NETOLOGY
+Содержимое файла 'student':
+----------------------------------------
+Строка 1: NETOLOGY-bash
+Строка 2: NETOLOGY-вшэ
+Строка 3: NETOLOGY-обучение
+Строка 4: NETOLOGY-devsecops
+ubuntu:~$ 
