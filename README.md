@@ -153,3 +153,50 @@ done < "$filename"
 Строка 3: NETOLOGY-обучение
 Строка 4: NETOLOGY-devsecops
 ubuntu:~$ 
+
+
+#!/bin/bash
+
+src="Dir_Source"
+mkdir -p "$src" 
+
+# Переходим в директорию
+cd "$src"
+read -p "Введите количество файлов: " n
+
+# Создаём файлы
+for ((i = 1; i <= n; i++)); do
+   touch "file$i.txt"
+done
+
+# Посмотреть файлы в текущей директории
+echo "Файлы в директории $src: "
+ls
+
+cd ..
+dst="Dir_backup"
+mkdir -p "$dst"
+
+# Получаем текущую дату
+current_date=$(date +%Y%m%d)
+
+# Копируем все файлы с добавлением даты
+for file in "$src"/*.txt; do
+    # Получаем только имя файла без пути
+    filename=$(basename "$file")
+    # Копируем с добавлением даты в начало имени
+    cp "$file" "$dst/${current_date}_${filename}"
+    done
+
+echo "Резервное копирование из $src в $dst выполнено успешно"
+echo "Файлы в директории $dst: "
+cd "$dst"
+ls 
+Введите количество файлов: 9
+Файлы в директории Dir_Source: 
+file1.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt  file7.txt  file8.txt  file9.txt
+Резервное копирование из Dir_Source в Dir_backup выполнено успешно
+Файлы в директории Dir_backup: 
+20251211_file1.txt  20251211_file3.txt  20251211_file5.txt  20251211_file7.txt  20251211_file9.txt
+20251211_file2.txt  20251211_file4.txt  20251211_file6.txt  20251211_file8.txt
+ubuntu:~/Dir_backup$ 
